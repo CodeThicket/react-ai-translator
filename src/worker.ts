@@ -1,4 +1,9 @@
-import { pipeline } from "@xenova/transformers";
+// worker.ts
+
+import { type PipelineType, pipeline } from "@xenova/transformers";
+
+// Extend the global scope for a dedicated worker
+declare const self: DedicatedWorkerGlobalScope & typeof globalThis;
 
 /**
  * This class uses the Singleton pattern to ensure that only one instance of the
@@ -8,23 +13,24 @@ import { pipeline } from "@xenova/transformers";
 class MyTranslationPipeline {
 	static task = "translation";
 	static model = "Xenova/nllb-200-distilled-600M";
-	static instance = null;
+	static instance: any = null;
 
-	static async getInstance(progressCallback = null) {
+	static async getInstance(
+		progressCallback: ((x: any) => void) | undefined = undefined,
+	): Promise<any> {
 		if (MyTranslationPipeline.instance === null) {
 			MyTranslationPipeline.instance = pipeline(
-				MyTranslationPipeline.task,
+				MyTranslationPipeline.task as PipelineType,
 				MyTranslationPipeline.model,
-				{ dtype: "q8", progress_callback: progressCallback },
+				{ quantized: true, progress_callback: progressCallback },
 			);
 		}
-
 		return MyTranslationPipeline.instance;
 	}
 }
 
 // Listen for messages from the main thread
-self.addEventListener("message", async (event) => {
+self.addEventListener("message", async (event: MessageEvent) => {
 	// Retrieve the translation pipeline. When called for the first time,
 	// this will load the pipeline and save it for future use.
 	const translator = await MyTranslationPipeline.getInstance((x) => {
@@ -33,15 +39,15 @@ self.addEventListener("message", async (event) => {
 		self.postMessage(x);
 	});
 
-	// Actually perform the translation
-
+	// Log the language codes
 	console.log(event.data.tgt_lang, event.data.src_lang, "langcode");
+
+	// Actually perform the translation
 	const output = await translator?.(event.data.text, {
 		tgt_lang: event.data.tgt_lang,
 		src_lang: event.data.src_lang,
-
 		// Allows for partial output
-		callback_function: (x) => {
+		callback_function: (x: any) => {
 			self.postMessage({
 				status: "update",
 				output: translator.tokenizer.decode(x[0].output_token_ids, {

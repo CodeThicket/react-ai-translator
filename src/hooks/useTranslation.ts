@@ -1,14 +1,47 @@
 import { useEffect, useRef, useState } from "react";
 
-const useTranslation = () => {
-	const worker = useRef(null);
+// Define the possible statuses returned by the worker
+type WorkerStatus =
+	| "initiate"
+	| "progress"
+	| "done"
+	| "ready"
+	| "update"
+	| "complete";
+
+// Define the structure of the progress items
+interface ProgressItem {
+	file?: string;
+	progress?: number;
+}
+
+// Define the data structure for worker messages
+interface WorkerMessageData {
+	status: WorkerStatus;
+	output?: string;
+	progress?: number;
+	file?: string;
+}
+
+// Hook return type
+interface UseTranslationReturn {
+	translate: (text: string, srcLang: string, tgtLang: string) => void;
+	translatedText: string;
+	loading: boolean;
+	modelLoading: boolean;
+	progress: ProgressItem[];
+	error: string | null;
+}
+
+const useTranslation = (_workerScript: string): UseTranslationReturn => {
+	const worker = useRef<Worker | null>(null);
 
 	// States for managing translation
-	const [loading, setLoading] = useState(false);
-	const [modelLoading, setModelLoading] = useState(false);
-	const [progress, setProgress] = useState([]);
-	const [translatedText, setTranslatedText] = useState("");
-	const [error, setError] = useState(null);
+	const [loading, setLoading] = useState<boolean>(false);
+	const [modelLoading, setModelLoading] = useState<boolean>(false);
+	const [progress, setProgress] = useState<ProgressItem[]>([]);
+	const [translatedText, setTranslatedText] = useState<string>("");
+	const [error, setError] = useState<string | null>(null);
 
 	console.log("hhhhh");
 
@@ -21,7 +54,7 @@ const useTranslation = () => {
 		}
 
 		// Handle worker messages
-		const onMessage = (e) => {
+		const onMessage = (e: MessageEvent<WorkerMessageData>) => {
 			const { status, output, progress: progressValue, file } = e.data;
 
 			console.log(status, "status");
@@ -62,7 +95,9 @@ const useTranslation = () => {
 					console.log("update");
 					console.log(output, "output");
 					// Append partial translations
-					setTranslatedText(output);
+					if (output) {
+						setTranslatedText(output);
+					}
 					break;
 				}
 
@@ -77,13 +112,14 @@ const useTranslation = () => {
 		worker.current.addEventListener("message", onMessage);
 
 		return () => {
-			// worker.current.terminate(); // Clean up worker on unmount
+			// If you want the worker to be terminated on unmount, uncomment below:
+			// worker.current?.terminate();
 			// worker.current = null;
 		};
 	}, []);
 
 	// Function to send translation requests to the worker
-	const translate = (text, srcLang, tgtLang) => {
+	const translate = (text: string, srcLang: string, tgtLang: string) => {
 		console.log("kkkk");
 		if (!worker.current) {
 			console.error("Worker is not initialized.");

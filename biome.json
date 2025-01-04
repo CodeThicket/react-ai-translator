@@ -56,6 +56,7 @@
 					"fix": "none",
 					"level": "warn"
 				},
+				"noExplicitAny": "warn",
 				"noConsoleLog": {
 					"fix": "none",
 					"level": "warn"

@@ -3,9 +3,10 @@
 		"esModuleInterop": true,
 		"jsx": "react-jsx",
 		"module": "ESNext",
-		"moduleResolution": "Bundler",
+		"moduleResolution": "node",
 		"skipLibCheck": true,
 		"strict": true,
-		"noEmit": true
+		"noEmit": true,
+		"lib": ["ESNext", "DOM", "WebWorker"]
 	}
 }
