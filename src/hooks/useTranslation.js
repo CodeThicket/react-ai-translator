@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 
-const useTranslation = (_workerScript) => {
+const useTranslation = () => {
 	const worker = useRef(null);
 
 	// States for managing translation
