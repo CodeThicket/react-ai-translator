@@ -1,7 +1,7 @@
 {
-	"name": "@codethicket/react-ai-translator",
+	"name": "@joelshejar/react-ai-translator",
 	"description": "",
-	"version": "0.0.0",
+	"version": "0.0.57",
 	"author": "Joel Rajesh",
 	"license": "MIT",
 	"keywords": [],
@@ -23,10 +23,10 @@
 		"link:self": "pnpm link --global",
 		"prepare": "lefthook install"
 	},
+	"module": "./dist/index.mjs",
 	"types": "./dist/index.d.ts",
 	"exports": {
 		".": {
-			"require": "./dist/index.js",
 			"import": "./dist/index.mjs"
 		}
 	},

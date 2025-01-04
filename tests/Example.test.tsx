@@ -1,6 +1,6 @@
 import renderer from "react-test-renderer";
 import { expect, it } from "vitest";
-import { Example } from "../src";
+import { Example } from "../src/Example";
 
 it("renders correctly", () => {
 	const tree = renderer

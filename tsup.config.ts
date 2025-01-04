@@ -5,16 +5,24 @@ import path from "node:path";
 import { type Options, defineConfig } from "tsup";
 
 const common: Options = {
-	entry: ["src/index.ts"],
+	entry: ["src/index.js", "src/worker.js"],
 	treeshake: false,
 	sourcemap: "inline",
 	minify: true,
 	clean: true,
 	dts: true,
 	splitting: false,
-	format: ["cjs", "esm"],
+	format: ["esm"],
 	external: ["react"],
 	injectStyle: false,
+	target: "es2021",
+	platform: "browser",
+	// dts: {
+	//   entry: 'src/index.js', // or whichever main file you want
+	// },
+	// loader: {
+	//   '.worker.js': 'file', // Handle worker files as static files
+	// },
 };
 
 const getPackageName = async () => {
@@ -66,11 +74,10 @@ const linkSelf = async () => {
 };
 
 export default defineConfig({
-	async onSuccess() {
-		// If you want need to add a use statement to files, you can use the following code:
-		// await _addUseStatement('dist/react', 'client');
+	// async onSuccess() {
+	// 	// If you want need to add a use statement to files, you can use the following code:
+	// 	// await _addUseStatement('dist/react', 'client');
 
-		await linkSelf();
-	},
+	// },
 	...common,
 });

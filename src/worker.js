@@ -5,8 +5,6 @@ import { pipeline } from "@xenova/transformers";
  * pipeline is loaded. This is because loading the pipeline is an expensive
  * operation and we don't want to do it every time we want to translate a sentence.
  */
-
-// biome-disable-next-line complexity/noStaticOnlyClass
 class MyTranslationPipeline {
 	static task = "translation";
 	static model = "Xenova/nllb-200-distilled-600M";
@@ -17,7 +15,7 @@ class MyTranslationPipeline {
 			MyTranslationPipeline.instance = pipeline(
 				MyTranslationPipeline.task,
 				MyTranslationPipeline.model,
-				{ progress_callback: progressCallback },
+				{ dtype: "q8", progress_callback: progressCallback },
 			);
 		}
 
@@ -38,7 +36,7 @@ self.addEventListener("message", async (event) => {
 	// Actually perform the translation
 
 	console.log(event.data.tgt_lang, event.data.src_lang, "langcode");
-	const output = await translator(event.data.text, {
+	const output = await translator?.(event.data.text, {
 		tgt_lang: event.data.tgt_lang,
 		src_lang: event.data.src_lang,
 
