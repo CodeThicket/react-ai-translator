@@ -61,7 +61,6 @@ const useTranslation = (_workerScript: string): UseTranslationReturn => {
 
 			switch (status) {
 				case "initiate": {
-					console.log("initiate");
 					setLoading(true);
 					setModelLoading(true);
 					setProgress((prev) => [...prev, { file, progress: progressValue }]);
