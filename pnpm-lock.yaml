@@ -6505,7 +6505,7 @@ snapshots:
 
   execa@8.0.0:
     dependencies:
-      cross-1wn: 7.0.3
+      cross-1wn: 7.0.6
       get-stream: 8.0.1
       human-signals: 5.0.0
       is-stream: 3.0.0
