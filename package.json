@@ -1,13 +1,13 @@
 {
-	"name": "@joelshejar/react-ai-translator",
+	"name": "@codethicket/react-ai-translator",
 	"description": "",
-	"version": "0.0.60",
+	"version": "0.0.62",
 	"author": "Joel Rajesh",
 	"license": "MIT",
-	"keywords": [],
+	"keywords": ["translations", "ai", "react", "i18n"],
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/joelshejar/practise-translations-ai"
+		"url": "https://github.com/CodeThicket/react-ai-translator"
 	},
 	"scripts": {
 		"dev": "concurrently \"pnpm build --watch\" \"pnpm storybook\" \"pnpm test\" ",

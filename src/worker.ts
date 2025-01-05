@@ -1,8 +1,5 @@
-// worker.ts
-
 import { type PipelineType, pipeline } from "@xenova/transformers";
 
-// Extend the global scope for a dedicated worker
 declare const self: DedicatedWorkerGlobalScope & typeof globalThis;
 
 /**
@@ -34,19 +31,12 @@ self.addEventListener("message", async (event: MessageEvent) => {
 	// Retrieve the translation pipeline. When called for the first time,
 	// this will load the pipeline and save it for future use.
 	const translator = await MyTranslationPipeline.getInstance((x) => {
-		// We also add a progress callback to the pipeline so that we can
-		// track model loading.
 		self.postMessage(x);
 	});
 
-	// Log the language codes
-	console.log(event.data.tgt_lang, event.data.src_lang, "langcode");
-
-	// Actually perform the translation
 	const output = await translator?.(event.data.text, {
 		tgt_lang: event.data.tgt_lang,
 		src_lang: event.data.src_lang,
-		// Allows for partial output
 		callback_function: (x: any) => {
 			self.postMessage({
 				status: "update",
@@ -57,7 +47,6 @@ self.addEventListener("message", async (event: MessageEvent) => {
 		},
 	});
 
-	// Send the output back to the main thread
 	self.postMessage({
 		status: "complete",
 		output: output,

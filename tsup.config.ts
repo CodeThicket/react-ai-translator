@@ -17,12 +17,6 @@ const common: Options = {
 	injectStyle: false,
 	target: "es2021",
 	platform: "browser",
-	// dts: {
-	//   entry: 'src/index.js', // or whichever main file you want
-	// },
-	// loader: {
-	//   '.worker.js': 'file', // Handle worker files as static files
-	// },
 };
 
 const getPackageName = async () => {
@@ -68,9 +62,6 @@ const linkSelf = async () => {
 
 	// biome-ignore lint/suspicious/noConsoleLog: <explanation>
 	// biome-ignore lint/suspicious/noConsole: <explanation>
-	console.log(
-		`Run 'pnpm link ${await getPackageName()} --global' inside another project to consume this package.`,
-	);
 };
 
 export default defineConfig({
