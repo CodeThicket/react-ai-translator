@@ -23,6 +23,14 @@ A **React** component for **local, secure, on-demand translations** powered by t
 
 ---
 
+## Demo
+
+Check out a live demo here: **[https://ai-translation-demo-three.vercel.app/](https://ai-translation-demo-three.vercel.app/)**
+
+The example code used for this demo is available in this repository: **[joelshejar/ai-translation-demo](https://github.com/joelshejar/ai-translation-demo)**
+
+---
+
 ## Features
 
 - **Secure & Local**: Utilizes your device’s GPU, keeping all data local.
@@ -158,6 +166,12 @@ We’ll review your submission and work together to make **react-ai-translator**
 
 ---
 
+## Acknowledgments
+
+We took the base setup for this starter package from [TimMikeladze/typescript-react-package-starter](https://github.com/TimMikeladze/typescript-react-package-starter).
+
+
+---
 # License
 
 This project is licensed under the [MIT License](./LICENSE).  
