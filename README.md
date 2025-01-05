@@ -40,6 +40,8 @@ Install the package via npm (or yarn):
 ```bash
 npm install react-ai-translator
 
+```
+
 # Usage
 
 Wrap your application (or a section of it) in the `TranslatorProvider` to initialize the translation model.  
@@ -96,6 +98,8 @@ function App() {
 }
 
 export default App
+
+```
 
 
 # How It Works

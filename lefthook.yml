@@ -5,7 +5,7 @@ pre-commit:
       run: pnpm biome check --write --unsafe --staged --no-errors-on-unmatched && git add -u
     typecheck:
       run: pnpm tsc
-    # build:
-    #   run: pnpm build
+    build:
+      run: pnpm build
     test:
       run: pnpm test:ci
