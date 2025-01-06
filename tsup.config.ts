@@ -5,7 +5,7 @@ import path from "node:path";
 import { type Options, defineConfig } from "tsup";
 
 const common: Options = {
-	entry: ["src/index.ts", "src/worker.ts"],
+	entry: ["src/index.ts", "src/worker.ts", "src/**/*.js", "bin/**/*.js"],
 	treeshake: false,
 	sourcemap: "inline",
 	minify: true,
@@ -16,7 +16,7 @@ const common: Options = {
 	external: ["react"],
 	injectStyle: false,
 	target: "es2021",
-	platform: "browser",
+	platform: "node",
 };
 
 const getPackageName = async () => {
