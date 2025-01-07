@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
-const { translate } = require("../src/translate-gen/translate");
-const { LANGUAGES_MAP } = require("../src/translate-gen/language_model_map");
+const { translate } = require("../translate-gen/translate");
+const { LANGUAGES_MAP } = require("../translate-gen/language_model_map");
 const { Command } = require("commander");
 const path = require("node:path");
 const program = new Command();
