@@ -15,6 +15,7 @@ A **React** component for **local, secure, on-demand translations** powered by t
 - [Installation](#installation)
 - [Usage](#usage)
 - [Example](#example)
+- [CLI Tool for Static Text Translation](#cli-tool-for-static-text-translation)
 - [How It Works](#how-it-works)
 - [Requirements](#requirements)
 - [Roadmap](#roadmap)
@@ -108,6 +109,17 @@ function App() {
 export default App
 
 ```
+
+## CLI Tool for Static Text Translation
+
+We provide a simple CLI command to automatically collect and translate **all static text** in your application into desired languages. Run the following command from your project root:
+
+```bash
+npx generate_translations -t Spanish Dutch
+
+```
+This command collects all the static text in your app and translates it into the specified languages (Spanish and Dutch in this example).
+Other CLI options (for example, to exclude specific files or directories) can be found in the cli.js file.
 
 
 # How It Works
