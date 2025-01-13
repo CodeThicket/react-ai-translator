@@ -16,7 +16,7 @@ const common: Options = {
 	external: ["react"],
 	injectStyle: false,
 	target: "es2021",
-	platform: "browser",
+	platform: "node",
 };
 
 const getPackageName = async () => {
