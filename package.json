@@ -1,7 +1,7 @@
 {
 	"name": "@codethicket/react-ai-translator",
 	"description": "A React component for local, secure, on-demand translations powered by the Xenova/nllb-200-distilled-600M model. This package utilizes the WebGPU capabilities of the device on which the app runs, ensuring data privacy and enabling you to translate text without sending data to third-party APIs.",
-	"version": "0.1.1",
+	"version": "0.1.5",
 	"author": "Joel Rajesh",
 	"license": "MIT",
 	"bin": {
