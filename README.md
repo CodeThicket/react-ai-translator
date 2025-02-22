@@ -3,7 +3,9 @@
 [![npm version](https://badge.fury.io/js/react-ai-translator.svg)](https://badge.fury.io/js/react-ai-translator)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE)
 
-A **React** component for **local, secure, on-demand translations** powered by the **[Xenova/nllb-200-distilled-600M](https://huggingface.co/Xenova/nllb-200-distilled-600M)** model. This package utilizes the **WebGPU** capabilities of the device on which the app runs, ensuring data privacy and enabling you to translate text without sending data to third-party APIs.
+1. This package provides a CLI command (**generate_translations**) to generate a `translations.json` file in your `public` directory, containing translations for your website's displayable content.  It uses AI translation services (configurable via options) to translate your content into specified languages. The models used are downloaded from huggingface and run your in local env.
+
+2. A **React** component for **local, secure, on-demand translations** powered by the **[Xenova/nllb-200-distilled-600M](https://huggingface.co/Xenova/nllb-200-distilled-600M)** model. This package utilizes the **WebGPU** capabilities of the device on which the app runs, ensuring data privacy and enabling you to translate text without sending data to third-party APIs.
 
 > **Note**: This is especially suitable when security is a concern and parts of the data are user-provided, which might not be captured in your `i18n` translation files.
 
@@ -47,13 +49,46 @@ The example code used for this demo is available in this repository: **[joelshej
 Install the package via npm (or yarn):
 
 ```bash
-npm install react-ai-translator
-
+npm i @codethicket/react-ai-translator
 ```
 
 # Usage
+## CLI Tool for Static Text Translation
 
-Wrap your application (or a section of it) in the `TranslatorProvider` to initialize the translation model.  
+We provide a simple CLI command to automatically collect and translate **all static text** in your application into desired languages. Run the following command from your project root:
+
+```bash
+npx generate_translations -t Spanish Dutch
+
+```
+This command collects all the static text in your app and translates it into the specified languages (Spanish and Dutch in this example).
+Other CLI options (for example, to exclude specific files or directories) can be found in the cli.js file.
+
+``` npx generate_translations -t Spanish Danish ...``` run cli command in project workspace with a list of language options to generate translations.json file in public dir of your project . 
+For full list of available options, including how to configure the translation model (e.g., specifying a Hugging Face model or API key) or selecting or excluding directories to parse, or available language options and more please refer to the cli.js file in the repository: https://github.com/joelshejar/ai-translation-demo.
+-t is the mandatory option to specify list of target languages.
+Options
+Here's a list of additional available options for the generate_translations command:
+
+-t, --target_languages <target_languages...>: A list of target languages for translation. See the documentation in https://github.com/facebookresearch/flores/blob/main/flores200/README.md#languages-in-flores-200 for a list of supported languages and use the exact name in this list for this option eg: -t Spanish .
+
+-d, --directory <directory>: The directory to start generating translations from. Defaults to the current working directory. Example: -d src.
+
+-e, --extensions <extensions...>: File extensions to search for translatable text. Defaults to js, jsx, ts, and tsx. Example: -e js jsx html.
+
+-i, --ignore_directories <ignore_directories...>: Directories to ignore during the search for translatable text. Defaults to node_modules, .git, .next, public, styles, and dist. Example: -i node_modules test .
+
+-s, --source_language <source_language>: The source language to translate from. Defaults to English. Example: -s "en-US". See the documentation for a list of supported source languages.
+
+-f, --ignore_files <ignore_files...>: Files to ignore during the search for translatable text. Defaults to .config. Example: -f config.js.
+
+-m, --ignore_functions <ignore_functions...>: Function names to ignore when searching for translatable text (used to prevent translating code). Defaults to a list of common utility functions. Example: -m require cva.
+
+-a, --ignore_attributes <ignore_attributes...>: HTML attributes to ignore when searching for translatable text. Defaults to a list of common attributes like href, src, etc. Example: -a className style.
+
+-l, --model_name <model_name>: The specific Hugging Face model name to use for translation. Defaults to Xenova/nllb-200-distilled-600M. Other options include (but may not be limited to): Xenova/mbart-large-50-many-to-many-mmt, Xenova/m2m100_418M, and CXDuncan/madlad400-3b-mt-optimized-quantized-onnx. See the documentation for supported models and their language support.
+
+2.Wrap your application (or a section of it) in the `TranslatorProvider` to initialize the translation model.  
 Use the `useTranslator` hook or `Translator` component to translate text wherever needed.
 
 Below is a minimal example. For more detailed usage, see the [Example](#example) section.
@@ -109,18 +144,6 @@ function App() {
 export default App
 
 ```
-
-## CLI Tool for Static Text Translation
-
-We provide a simple CLI command to automatically collect and translate **all static text** in your application into desired languages. Run the following command from your project root:
-
-```bash
-npx generate_translations -t Spanish Dutch
-
-```
-This command collects all the static text in your app and translates it into the specified languages (Spanish and Dutch in this example).
-Other CLI options (for example, to exclude specific files or directories) can be found in the cli.js file.
-
 
 # How It Works
 
